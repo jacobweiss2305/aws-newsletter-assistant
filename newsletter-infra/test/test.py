@@ -3,7 +3,7 @@ import json
 import time
 
 # API Gateway endpoint URL
-api_url = "https://z5sgimr3pb.execute-api.us-east-1.amazonaws.com/"
+api_url = "https://3hmnnfbgqh.execute-api.us-east-1.amazonaws.com/"
 
 # Test the /initiate endpoint
 def test_initiate():
