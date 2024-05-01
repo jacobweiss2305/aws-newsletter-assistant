@@ -20,7 +20,6 @@ dynamodb = boto3.resource("dynamodb")
 def handler(event, context):
     process_id = event["processId"]
     question = event["question"]
-    question = f"Process ID: {str(process_id)}\n{str(question)}"
     # Update the process status to 'PROCESSING' in DynamoDB
     process_table = dynamodb.Table(os.environ["PROCESS_TABLE"])
     process_table.update_item(
@@ -47,11 +46,15 @@ def handler(event, context):
                 article_data = newspaper_tools.get_article_data(r["url"])
                 if article_data and "text" in article_data:
                     r["text"] = article_data["text"]
-                    news_results.append(r)                   
+                    news_results.append(r)
+                    
+        logger.info(f"Found {len(news_results)} news articles for {question}")
+
+        logger.info(f"News results: {news_results}")                  
 
         # Summarizer
+        news_summary = ""
         if len(news_results) > 0:
-            news_summary = ""
             article_summarizer = Assistant(
                 name="Article Summarizer",
                 llm=Groq(model="llama3-70b-8192"),
