@@ -1,0 +1,4 @@
+groq
+phidata
+newspaper3k
+duckduckgo-search
